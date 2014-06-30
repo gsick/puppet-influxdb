@@ -79,5 +79,5 @@ class influxdb (
   #    command => "curl -s \"http://localhost:8086/db?u=root&p=root\" -d \"{\\\"name\\\": \\\"${database}\\\"}\"",
   #    require => Service['influxdb service'],
   #  }
-  }
+  #}
 }
