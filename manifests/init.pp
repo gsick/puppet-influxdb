@@ -48,18 +48,20 @@ class influxdb (
   }
 
   package { 'install influxdb':
-    ensure  => 'present',
-    name    => 'influxdb',
+    ensure   => 'present',
+    name     => 'influxdb',
     provider => 'rpm',
-    source  => "${tmp}/influxdb-latest-1.${architecture}.rpm",
-    require => Exec['download influxdb'],
+    source   => "${tmp}/influxdb-latest-1.${architecture}.rpm",
+    require  => Exec['download influxdb'],
   }
 
   file { 'fix init script':
-    ensure => 'present',
-    path   => '/opt/influxdb/current/scripts/init.sh',
-    source => "puppet:///modules/${module_name}/init.sh",
-    mode   => '0755',
+    ensure  => 'present',
+    path    => '/opt/influxdb/current/scripts/init.sh',
+    source  => "puppet:///modules/${module_name}/init.sh",
+    user    => $user,
+    group   => $group,
+    mode    => '0755',
     require => Package['install influxdb'],
   }
 
