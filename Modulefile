@@ -1,0 +1,10 @@
+name         'gsick-influxdb'
+version      '0.0.1'
+source       'https://github.com/gsick/puppet-influxdb.git'
+author       'Gamaliel Sick'
+license      'MIT'
+summary      'InfluxDB Puppet installation module'
+description  'Puppet module for installing and configuring InfluxDB'
+project_page 'https://github.com/gsick/puppet-influxdb'
+
+dependency   'puppetlabs/stdlib', '>= 4.2.2'
