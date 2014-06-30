@@ -50,8 +50,17 @@ class influxdb (
   package { 'install influxdb':
     ensure  => 'present',
     name    => 'influxdb',
+    provider => 'rpm',
     source  => "${tmp}/influxdb-latest-1.${architecture}.rpm",
     require => Exec['download influxdb'],
+  }
+
+  file { 'fix init script':
+    ensure => 'present',
+    path   => '/opt/influxdb/current/scripts/init.sh',
+    source => "puppet:///modules/${module_name}/init.sh",
+    mode   => '0755',
+    require => Package['install influxdb'],
   }
 
   service {'influxdb service':
@@ -60,7 +69,7 @@ class influxdb (
     enable     => $service_enable,
     hasstatus  => true,
     hasrestart => true,
-    require    => [Package['install influxdb'], User['influxdb user']],
+    require    => [Package['install influxdb'], User['influxdb user'], File['fix init script']],
   }
 
   $databases.each |$database| {
