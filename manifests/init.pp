@@ -59,7 +59,7 @@ class influxdb (
     ensure  => 'present',
     path    => '/opt/influxdb/current/scripts/init.sh',
     source  => "puppet:///modules/${module_name}/init.sh",
-    user    => $user,
+    owner   => $user,
     group   => $group,
     mode    => '0755',
     require => Package['install influxdb'],
