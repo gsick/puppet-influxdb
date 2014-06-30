@@ -7,7 +7,7 @@ class influxdb (
   $admins         = [],
   $tmp            = '/tmp',
   $service_ensure = 'running',
-  $service_enable = 'true',
+  $service_enable = true,
 ) {
 
   validate_string($user)
