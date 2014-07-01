@@ -51,7 +51,7 @@ class influxdb (
     require => Package['wget'],
   }
 
-  package { 'install influxdb':
+  package { 'influxdb':
     ensure   => 'present',
     name     => 'influxdb',
     provider => 'rpm',
@@ -66,7 +66,7 @@ class influxdb (
     owner   => $user,
     group   => $group,
     mode    => '0755',
-    require => Package['install influxdb'],
+    require => Package['influxdb'],
   }
 
   service {'influxdb service':
