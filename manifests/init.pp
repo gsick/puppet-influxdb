@@ -75,7 +75,7 @@ class influxdb (
     enable     => $service_enable,
     hasstatus  => true,
     hasrestart => true,
-    require    => [Package['install influxdb'], User['influxdb user'], File['fix init script']],
+    require    => [Package['influxdb'], User['influxdb user'], File['fix init script']],
   }
 
   $databases.each |$database| {
