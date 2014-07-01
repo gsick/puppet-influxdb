@@ -3,6 +3,8 @@
 class influxdb (
   $user           = 'influxdb',
   $group          = 'influxdb',
+  $web_user       = 'root',
+  $web_pwd        = 'root',
   $databases      = [],
   $admins         = [],
   $tmp            = '/tmp',
@@ -12,6 +14,8 @@ class influxdb (
 
   validate_string($user)
   validate_string($group)
+  validate_string($web_user)
+  validate_string($web_pwd)
   validate_array($databases)
   validate_array($admins)
   validate_absolute_path($tmp)
@@ -78,7 +82,7 @@ class influxdb (
     exec { "create database ${database}":
       cwd     => $tmp,
       path    => '/sbin:/bin:/usr/bin',
-      command => "curl -s \"http://localhost:8086/db?u=root&p=root\" -d \"{\\\"name\\\": \\\"${database}\\\"}\"",
+      command => "curl -s \"http://localhost:8086/db?u=${web_user}&p=${web_pwd}\" -d \"{\\\"name\\\": \\\"${database}\\\"}\"",
       require => Service['influxdb service'],
     }
   }
