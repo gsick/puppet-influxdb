@@ -82,16 +82,6 @@ class influxdb (
     require  => Exec['download influxdb'],
   }
 
-  file { 'fix init script':
-    ensure  => 'present',
-    path    => '/opt/influxdb/current/scripts/init.sh',
-    source  => "puppet:///modules/${module_name}/init.sh",
-    owner   => $user,
-    group   => $group,
-    mode    => '0755',
-    require => Package['influxdb'],
-  }
-
   service {'influxdb service':
     ensure     => $service_ensure,
     name       => 'influxdb',
