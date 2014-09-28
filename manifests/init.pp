@@ -2,7 +2,9 @@
 
 class influxdb (
   $user           = 'influxdb',
+  $user_uid       = undef,
   $group          = 'influxdb',
+  $group_gid      = undef,
   $web_user       = 'root',
   $web_pwd        = 'root',
   $databases      = [],
@@ -28,19 +30,40 @@ class influxdb (
 
   ensure_packages(['wget', 'curl'])
 
-  group { 'influxdb group':
-    ensure => 'present',
-    name   => $group,
+  if($group_gid) {
+    group { 'influxdb group':
+      ensure => 'present',
+      name   => $group,
+      gid    => $group_gid,
+    }
+  } else {
+    group { 'influxdb group':
+      ensure => 'present',
+      name   => $group,
+    }
   }
 
-  user { 'influxdb user':
-    ensure  => 'present',
-    name    => $user,
-    groups  => $group,
-    comment => 'InfluxDB user',
-    shell   => '/sbin/nologin',
-    system  => true,
-    require => Group['influxdb group'],
+  if($user_uid) {
+    user { 'influxdb user':
+      ensure  => 'present',
+      name    => $user,
+      uid     => $user_uid,
+      groups  => $group,
+      comment => 'InfluxDB user',
+      shell   => '/sbin/nologin',
+      system  => true,
+      require => Group['influxdb group'],
+    }
+  } else {
+    user { 'influxdb user':
+      ensure  => 'present',
+      name    => $user,
+      groups  => $group,
+      comment => 'InfluxDB user',
+      shell   => '/sbin/nologin',
+      system  => true,
+      require => Group['influxdb group'],
+    }
   }
 
   exec { 'download influxdb':

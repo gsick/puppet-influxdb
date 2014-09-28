@@ -1,8 +1,9 @@
 
 class influxdb::config(
   $config_path = '/opt/influxdb/shared/config.toml',
-  $hostname = '',
+  $hostname    = '',
   $bind_adress = '0.0.0.0',
+  $api_port    = 8086,
 ) {
 
   Ini_setting {
